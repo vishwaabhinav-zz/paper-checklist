@@ -1,0 +1,49 @@
+<link rel="import" href="bower_components/polymer/polymer.html">
+<link rel="import" href="bower_components/paper-input/paper-input.html">
+<link rel="import" href="bower_components/paper-checkbox/paper-checkbox.html">
+<link rel="import" href="bower_components/paper-menu/paper-menu.html">
+<link rel="import" href="bower_components/paper-item/paper-item.html">
+
+
+<dom-module id="paper-checklist">
+  <template>
+    <paper-input label="Type to search"></paper-input>
+    
+    <paper-menu>
+      <template is="dom-repeat" items="{{checklistData}}">
+        
+        <paper-item><paper-checkbox></paper-checkbox>{{item}}</paper-item>
+      </template>
+    </paper-menu>
+  </template>
+  
+  <script>
+    var importDoc = document.currentScript.ownerDocument;
+    if(!importDoc) {
+      importDoc = document.currentScript._ownerDocument;
+    }
+
+    Polymer({
+      is: "paper-checklist",
+      
+      properties: {
+        list: ['A', 'B', 'C'],
+        checklistData : {
+          type: Array,
+          value: []
+        }
+      }
+      
+      // ready: function() {
+      //   var userList = this.querySelectorAll('ul > li');
+      //   var checklistData = [];
+      //   for(var i = 0; i < userList.length; i++) {
+      //     checklistData.push(userList[i].innerHTML);
+      //   }
+        
+      //   this.checklistData = checklistData;
+      // }
+    });
+  </script>
+  
+</dom-module>
