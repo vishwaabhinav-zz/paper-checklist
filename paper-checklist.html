@@ -7,12 +7,11 @@
 
 <dom-module id="paper-checklist">
   <template>
-    <paper-input label="Type to search"></paper-input>
+    <paper-input id="checklist-input" on-keyup="filterList" label="Type to search"></paper-input>
     
-    <paper-menu>
+    <paper-menu id="checklist-menu">
       <template is="dom-repeat" items="{{checklistData}}">
-        
-        <paper-item><paper-checkbox></paper-checkbox>{{item}}</paper-item>
+        <paper-item role="menuitemcheckbox"><paper-checkbox></paper-checkbox><paper-item-body>{{item}}</paper-item-body></paper-item>
       </template>
     </paper-menu>
   </template>
@@ -27,22 +26,34 @@
       is: "paper-checklist",
       
       properties: {
-        list: ['A', 'B', 'C'],
         checklistData : {
           type: Array,
           value: []
         }
-      }
+      },
       
-      // ready: function() {
-      //   var userList = this.querySelectorAll('ul > li');
-      //   var checklistData = [];
-      //   for(var i = 0; i < userList.length; i++) {
-      //     checklistData.push(userList[i].innerHTML);
-      //   }
+      filterList: function(e) {
+        var inputStr = this.$['checklist-input'].value;
         
-      //   this.checklistData = checklistData;
-      // }
+        var menuItems = this.$['checklist-menu'].querySelectorAll('paper-item');
+        
+        for(var i = 0; i < menuItems.length; i++) {
+          menuItems[i].style.display = 'none';
+          if(menuItems[i].querySelector('paper-item-body').innerHTML.toLowerCase().indexOf(inputStr.toLowerCase()) !== -1) {
+            menuItems[i].style.display = '';
+          }
+        }
+      },
+      
+      ready: function() {
+        var userList = Polymer.dom(this).querySelectorAll('ul > li');
+        var checklistData = [];
+        for(var i = 0; i < userList.length; i++) {
+          checklistData.push(userList[i].innerHTML);
+        }
+
+        this.checklistData = checklistData;
+      }
     });
   </script>
   
